@@ -41,7 +41,7 @@
     <h2>Top Ventas</h2>
     <?php 
     include '../services/connection.php';
-    $result2 = mysqli_query($conn, "SELECT Books.Title FROM Books");
+    $result2 = mysqli_query($conn, "SELECT Books.Title FROM Books where Top = '1'");
 
     if (!empty($result2) && mysqli_num_rows($result2) > 0) {
       // datos de salida de cada clase 
