@@ -18,12 +18,32 @@
 <div class="row">  
   <div class="column left">
     <div class="topnav">
-        <a href="../index.html">Re-Read</a>
-        <a href="../view/libros.html">Libros</a>
-        <a href="../view/ebooks.html">eBooks</a>
+        <a href="../index.php">Re-Read</a>
+        <a href="../view/libros.php">Libros</a>
+        <a href="../view/ebooks.php">eBooks</a>
       </div>
     <h2>Toda la actualidad en eBook</h2>
-    <div class="ebook">
+
+    <?php
+      include '../services/connection.php';
+
+      //2. Selección y muestra datos de la base de datos
+      $result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM Books");
+
+      if (!empty($result) && mysqli_num_rows($result) > 0) {
+        // datos de salida de cada clase 
+        while ($row = mysqli_fetch_array($result)) {
+          echo "<div class='ebook'>";
+          //Añadimos la imagen a la página con la etiqueta img de HTML
+          echo "<img src=../img/".$row['img']." alt='".$row['Title']."'>";
+          // Añadimos el título a la página con la etiqueta h2 de HTML
+          echo "</div>";
+        }
+      } else {
+        echo "0 resultados";
+      }
+    ?> 
+   <!-- <div class="ebook">
       <a href="https://www.casadellibro.com/ebook-la-espada-del-destino-ebook/9788408124429/2250609"><img src="../img/ebook1.png" alt="ebook1">
       <div>La espada del destino</div></a>
     </div>
@@ -38,7 +58,7 @@
     <div class="ebook">
         <a href="https://www.casadellibro.com/libro-bautismo-de-fuego-saga-geralt-de-rivia-5-edicion-coleccionista-/9788498890549/1809990"><img src="../img/ebook4.jpg" alt="ebook4">
         <div>El bautismo de fuego</div></a>
-    </div>
+    </div> -->
   </div>
   
   <div class="column right">
