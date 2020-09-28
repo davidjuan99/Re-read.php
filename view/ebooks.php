@@ -63,11 +63,23 @@
   
   <div class="column right">
     <h2>Top Ventas</h2>
-    <p>Cien años de soledad</p>
-    <p>Crónica de una muerte anunciada</p>
-    <p>El otoño del patriarca</p>
-    <p>El general en su laberinto</p>
+    <?php 
+    include '../services/connection.php';
+    $result2 = mysqli_query($conn, "SELECT Books.Title FROM Books");
+
+    if (!empty($result2) && mysqli_num_rows($result2) > 0) {
+      // datos de salida de cada clase 
+      while ($row2 = mysqli_fetch_array($result2)) {
+        echo "<p>".$row2['Title']."</p>";
+      }
+    }
+  //  <p>Cien años de soledad</p>
+   // <p>Crónica de una muerte anunciada</p>
+   // <p>El otoño del patriarca</p>
+    //<p>El general en su laberinto</p>
+    ?>
   </div>
+
 </div>
   
 </body>
