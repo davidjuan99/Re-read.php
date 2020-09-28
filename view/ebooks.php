@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Estilos css -->
 <link rel="stylesheet" href="../css/estilos.css">
+<script src="../js/code.js"></script>
 </head>
 <body>
 <div class="logo">Re-Read</div>
@@ -36,7 +37,7 @@
           echo "<div class='ebook'>";
           //Añadimos la imagen a la página con la etiqueta img de HTML
           echo "<img src=../img/".$row['img']." alt='".$row['Title']."'>";
-          echo "<p>".$row['Description']."</p>";
+          echo "<p class='desc'>".$row['Description']."</p>";
           echo "</div>";
         }
       } else {
