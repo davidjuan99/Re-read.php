@@ -64,7 +64,6 @@
   <div class="column right">
     <h2>Top Ventas</h2>
     <?php 
-    include '../services/connection.php';
     $result2 = mysqli_query($conn, "SELECT Books.Title FROM Books");
 
     if (!empty($result2) && mysqli_num_rows($result2) > 0) {
