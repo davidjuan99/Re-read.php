@@ -36,7 +36,7 @@
           echo "<div class='ebook'>";
           //Añadimos la imagen a la página con la etiqueta img de HTML
           echo "<img src=../img/".$row['img']." alt='".$row['Title']."'>";
-          // Añadimos el título a la página con la etiqueta h2 de HTML
+          echo "<p>".$row['Description']."</p>";
           echo "</div>";
         }
       } else {
