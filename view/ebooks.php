@@ -6,6 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Estilos css -->
 <link rel="stylesheet" href="../css/estilos.css">
+<script src="../js/code.js"></script>
 </head>
 <body>
 <div class="logo">Re-Read</div>
@@ -36,7 +37,7 @@
           echo "<div class='ebook'>";
           //Añadimos la imagen a la página con la etiqueta img de HTML
           echo "<img src=../img/".$row['img']." alt='".$row['Title']."'>";
-          // Añadimos el título a la página con la etiqueta h2 de HTML
+          echo "<p class='desc'>".$row['Description']."</p>";
           echo "</div>";
         }
       } else {
@@ -63,11 +64,22 @@
   
   <div class="column right">
     <h2>Top Ventas</h2>
-    <p>Cien años de soledad</p>
-    <p>Crónica de una muerte anunciada</p>
-    <p>El otoño del patriarca</p>
-    <p>El general en su laberinto</p>
+    <?php 
+    $result2 = mysqli_query($conn, "SELECT Books.Title FROM Books where Top = '1'");
+
+    if (!empty($result2) && mysqli_num_rows($result2) > 0) {
+      // datos de salida de cada clase 
+      while ($row2 = mysqli_fetch_array($result2)) {
+        echo "<p>".$row2['Title']."</p>";
+      }
+    }
+  //  <p>Cien años de soledad</p>
+   // <p>Crónica de una muerte anunciada</p>
+   // <p>El otoño del patriarca</p>
+    //<p>El general en su laberinto</p>
+    ?>
   </div>
+
 </div>
   
 </body>
