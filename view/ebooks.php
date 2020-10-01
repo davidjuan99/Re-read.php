@@ -24,7 +24,35 @@
         <a href="../view/ebooks.php">eBooks</a>
       </div>
     <h2>Toda la actualidad en eBook</h2>
+    <div class="form" method="POST">
+    <form action="/ebooks.php">
+      <label for="fautor">Autor</label>
+      <input type="text" id="fautor" name="fautor" placeholder="Introduzca el autor...">
+    <!--   
+      <label for="lname">Last Name</label>
+      <input type="text" id="lname" name="lastname" placeholder="Your last name..">
 
+      <label for="country">Country</label>
+      <select id="country" name="country">
+        <option value="australia">Australia</option>
+        <option value="canada">Canada</option>
+        <option value="usa">USA</option>
+      </select>
+     -->
+      <input type="submit" value="Enviar">
+    </form>
+    </div>
+    <?php
+      if(isset($_POST['fautor'])){
+        // filtrará los ebooks que se mostrarán en la página.
+      } else {
+        // sino mostrará todos los ebooks de la base de datos.
+        
+      }
+
+
+
+    ?>
     <?php
       include '../services/connection.php';
 
