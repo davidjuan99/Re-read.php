@@ -28,22 +28,23 @@
       <form action="./ebooks.php" method="POST">
         <label for="fautor">Autor</label>
         <input type="text" id="fautor" name="fautor" placeholder="Introduzca el autor...">
-      <!--   
-        <label for="country">Country</label>
-        <select id="country" name="country">
-          <option value="australia">Australia</option>
-          <option value="canada">Canada</option>
-          <option value="usa">USA</option>
+        <select name="pais">
+        <option value="%">Seleccionar pais</option>
+        <?php
+        include '../services/connection.php';
+        $sql_pais = mysqli_query($conn, "SELECT DISTINCT Authors.Country from Authors order by Authors.Country");
+        while ($row = mysqli_fetch_array($sql_pais)) {
+        echo "<option value='" . $row['Country'] . "'>" . $row['Country'] . "</option>";
+        }
+        ?>        
         </select>
-      -->
         <input type="submit" value="Enviar">
     </form>
     </div>
     <?php
-      include '../services/connection.php';
       if(isset($_POST['fautor'])){
         // filtrará los ebooks que se mostrarán en la página.
-        $result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors on Books.Id=BooksAuthors.BookId INNER JOIN Authors on BooksAuthors.AuthorId = Authors.Id where Authors.Name LIKE '%{$_POST['fautor']}%'");
+        $result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors on Books.Id=BooksAuthors.BookId INNER JOIN Authors on BooksAuthors.AuthorId = Authors.Id where Authors.Name LIKE '%{$_POST['fautor']}%' and Authors.Country like '%{$_POST['pais']}%'");
 
       } else {
         // sino mostrará todos los ebooks de la base de datos.
