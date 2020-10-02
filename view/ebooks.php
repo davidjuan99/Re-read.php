@@ -24,15 +24,36 @@
         <a href="../view/ebooks.php">eBooks</a>
       </div>
     <h2>Toda la actualidad en eBook</h2>
-
+    <div class="form">
+      <form action="./ebooks.php" method="POST">
+        <label for="fautor">Autor</label>
+        <input type="text" id="fautor" name="fautor" placeholder="Introduzca el autor...">
+        <select name="pais">
+        <option value="%">Seleccionar pais</option>
+        <?php
+        include '../services/connection.php';
+        $sql_pais = mysqli_query($conn, "SELECT DISTINCT Authors.Country from Authors order by Authors.Country");
+        while ($row = mysqli_fetch_array($sql_pais)) {
+        echo "<option value='" . $row['Country'] . "'>" . $row['Country'] . "</option>";
+        }
+        ?>        
+        </select>
+        <input type="submit" value="Enviar">
+    </form>
+    </div>
     <?php
-      include '../services/connection.php';
+      if(isset($_POST['fautor'])){
+        // filtrará los ebooks que se mostrarán en la página.
+        $result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors on Books.Id=BooksAuthors.BookId INNER JOIN Authors on BooksAuthors.AuthorId = Authors.Id where Authors.Name LIKE '%{$_POST['fautor']}%' and Authors.Country like '%{$_POST['pais']}%'");
 
-      //2. Selección y muestra datos de la base de datos
-      $result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM Books");
-
+      } else {
+        // sino mostrará todos los ebooks de la base de datos.
+        $result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM Books");
+        
+      }
       if (!empty($result) && mysqli_num_rows($result) > 0) {
-        // datos de salida de cada clase 
+        // datos de salida de cada clase
+         
         while ($row = mysqli_fetch_array($result)) {
           echo "<div class='ebook'>";
           //Añadimos la imagen a la página con la etiqueta img de HTML
@@ -43,6 +64,14 @@
       } else {
         echo "0 resultados";
       }
+
+
+   /*  ?>
+    <?php */
+
+
+      //2. Selección y muestra datos de la base de datos
+
     ?> 
    <!-- <div class="ebook">
       <a href="https://www.casadellibro.com/ebook-la-espada-del-destino-ebook/9788408124429/2250609"><img src="../img/ebook1.png" alt="ebook1">
