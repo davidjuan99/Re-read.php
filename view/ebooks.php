@@ -44,19 +44,9 @@
     </form>
     </div>
     <?php
-      if(isset($_POST['fautor'])){
+      if(isset($_POST['fautor']) and isset($_POST['ftitulo'])){
         // filtrará los ebooks que se mostrarán en la página.
-        $result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors on Books.Id=BooksAuthors.BookId INNER JOIN Authors on BooksAuthors.AuthorId = Authors.Id where Authors.Name LIKE '%{$_POST['fautor']}%' and Authors.Country like '%{$_POST['pais']}%'");
-
-      } else {
-        // sino mostrará todos los ebooks de la base de datos.
-        $result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM Books");
-        
-      }
-      if(isset($_POST['ftitulo'])){
-        // filtrará los ebooks que se mostrarán en la página.
-        $result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors on Books.Id=BooksAuthors.BookId INNER JOIN Authors on BooksAuthors.AuthorId = Authors.Id where Authors.Name LIKE '%{$_POST['fautor']}%' and Authors.Country like '%{$_POST['pais']}%'and Books.Title LIKE '%{$_POST['ftitulo']}%'");
-
+        $result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors on Books.Id=BooksAuthors.BookId INNER JOIN Authors on BooksAuthors.AuthorId = Authors.Id where Authors.Name LIKE '%{$_POST['fautor']}%' and Authors.Country like '%{$_POST['pais']}%' and Books.Title LIKE '%{$_POST['ftitulo']}%'");
       } else {
         // sino mostrará todos los ebooks de la base de datos.
         $result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM Books");
@@ -64,13 +54,17 @@
       }
       if (!empty($result) && mysqli_num_rows($result) > 0) {
         // datos de salida de cada clase
-         
+         $i=0;
         while ($row = mysqli_fetch_array($result)) {
+          $i=$i+1;
           echo "<div class='ebook'>";
           //Añadimos la imagen a la página con la etiqueta img de HTML
           echo "<img src=../img/".$row['img']." alt='".$row['Title']."'>";
           echo "<p class='desc'>".$row['Description']."</p>";
           echo "</div>";
+          if ($i % 3 == 0) {
+            echo "<div style='clear:both;'></div>";
+          }
         }
       } else {
         echo "0 resultados";
