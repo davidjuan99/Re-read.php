@@ -28,6 +28,8 @@
       <form action="./ebooks.php" method="POST">
         <label for="fautor">Autor</label>
         <input type="text" id="fautor" name="fautor" placeholder="Introduzca el autor...">
+        <label for="fautor">Titulo</label>
+        <input type="text" id="ftitulo" name="ftitulo" placeholder="Introduzca el título...">
         <select name="pais">
         <option value="%">Seleccionar pais</option>
         <?php
@@ -45,6 +47,15 @@
       if(isset($_POST['fautor'])){
         // filtrará los ebooks que se mostrarán en la página.
         $result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors on Books.Id=BooksAuthors.BookId INNER JOIN Authors on BooksAuthors.AuthorId = Authors.Id where Authors.Name LIKE '%{$_POST['fautor']}%' and Authors.Country like '%{$_POST['pais']}%'");
+
+      } else {
+        // sino mostrará todos los ebooks de la base de datos.
+        $result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM Books");
+        
+      }
+      if(isset($_POST['ftitulo'])){
+        // filtrará los ebooks que se mostrarán en la página.
+        $result = mysqli_query($conn, "SELECT Books.Description, Books.img, Books.Title FROM Books INNER JOIN BooksAuthors on Books.Id=BooksAuthors.BookId INNER JOIN Authors on BooksAuthors.AuthorId = Authors.Id where Authors.Name LIKE '%{$_POST['fautor']}%' and Authors.Country like '%{$_POST['pais']}%'and Books.Title LIKE '%{$_POST['ftitulo']}%'");
 
       } else {
         // sino mostrará todos los ebooks de la base de datos.
